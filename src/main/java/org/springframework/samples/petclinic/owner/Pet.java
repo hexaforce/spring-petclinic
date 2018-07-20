@@ -38,6 +38,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.petclinic.model.NamedEntity;
 import org.springframework.samples.petclinic.visit.Visit;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Simple business object representing a pet.
  *
@@ -45,6 +48,8 @@ import org.springframework.samples.petclinic.visit.Visit;
  * @author Juergen Hoeller
  * @author Sam Brannen
  */
+@Getter
+@Setter
 @Entity
 @Table(name = "pets")
 public class Pet extends NamedEntity {
@@ -63,30 +68,6 @@ public class Pet extends NamedEntity {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "petId", fetch = FetchType.EAGER)
 	private Set<Visit> visits = new LinkedHashSet<>();
-
-	public void setBirthDate(LocalDate birthDate) {
-		this.birthDate = birthDate;
-	}
-
-	public LocalDate getBirthDate() {
-		return this.birthDate;
-	}
-
-	public PetType getType() {
-		return this.type;
-	}
-
-	public void setType(PetType type) {
-		this.type = type;
-	}
-
-	public Owner getOwner() {
-		return this.owner;
-	}
-
-	protected void setOwner(Owner owner) {
-		this.owner = owner;
-	}
 
 	protected Set<Visit> getVisitsInternal() {
 		if (this.visits == null) {
