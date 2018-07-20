@@ -25,12 +25,17 @@ import javax.validation.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.petclinic.model.BaseEntity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Simple JavaBean domain object representing a visit.
  *
  * @author Ken Krebs
  * @author Dave Syer
  */
+@Getter
+@Setter
 @Entity
 @Table(name = "visits")
 public class Visit extends BaseEntity {
@@ -51,30 +56,6 @@ public class Visit extends BaseEntity {
 	 */
 	public Visit() {
 		this.date = LocalDate.now();
-	}
-
-	public LocalDate getDate() {
-		return this.date;
-	}
-
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
-
-	public String getDescription() {
-		return this.description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Integer getPetId() {
-		return this.petId;
-	}
-
-	public void setPetId(Integer petId) {
-		this.petId = petId;
 	}
 
 }
