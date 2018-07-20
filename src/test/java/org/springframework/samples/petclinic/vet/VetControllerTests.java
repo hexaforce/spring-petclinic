@@ -53,8 +53,10 @@ public class VetControllerTests {
 
 	@Test
 	public void testShowVetListHtml() throws Exception {
-		mockMvc.perform(get("/vets.html")).andExpect(status().isOk()).andExpect(model().attributeExists("vets"))
-				.andExpect(view().name("vets/vetList"));
+		mockMvc.perform(get("/vets.html"))
+			.andExpect(status().isOk())
+			.andExpect(model().attributeExists("vets"))
+			.andExpect(view().name("vets/vetList"));
 	}
 
 	@Test
@@ -67,9 +69,10 @@ public class VetControllerTests {
 
 	@Test
 	public void testShowVetListXml() throws Exception {
-		mockMvc.perform(get("/vets").accept(MediaType.APPLICATION_XML)).andExpect(status().isOk())
-				.andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
-				.andExpect(content().node(hasXPath("/vets/vetList[id=1]/id")));
+		mockMvc.perform(get("/vets").accept(MediaType.APPLICATION_XML))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(MediaType.APPLICATION_XML_VALUE))
+			.andExpect(content().node(hasXPath("/vets/vetList[id=1]/id")));
 	}
 
 }

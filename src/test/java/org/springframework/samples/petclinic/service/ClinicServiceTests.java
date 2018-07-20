@@ -78,11 +78,13 @@ public class ClinicServiceTests {
 
 	@Test
 	public void shouldFindOwnersByLastName() {
+		
 		Collection<Owner> owners = this.owners.findByLastName("Davis");
 		assertThat(owners.size()).isEqualTo(2);
 
 		owners = this.owners.findByLastName("Daviss");
 		assertThat(owners.isEmpty()).isTrue();
+		
 	}
 
 	@Test
@@ -97,6 +99,7 @@ public class ClinicServiceTests {
 	@Test
 	@Transactional
 	public void shouldInsertOwner() {
+		
 		Collection<Owner> owners = this.owners.findByLastName("Schultz");
 		int found = owners.size();
 
@@ -111,11 +114,13 @@ public class ClinicServiceTests {
 
 		owners = this.owners.findByLastName("Schultz");
 		assertThat(owners.size()).isEqualTo(found + 1);
+		
 	}
 
 	@Test
 	@Transactional
 	public void shouldUpdateOwner() {
+		
 		Owner owner = this.owners.findById(1);
 		String oldLastName = owner.getLastName();
 		String newLastName = oldLastName + "X";
@@ -126,6 +131,7 @@ public class ClinicServiceTests {
 		// retrieving new name from database
 		owner = this.owners.findById(1);
 		assertThat(owner.getLastName()).isEqualTo(newLastName);
+		
 	}
 
 	@Test
@@ -138,17 +144,20 @@ public class ClinicServiceTests {
 
 	@Test
 	public void shouldFindAllPetTypes() {
+		
 		Collection<PetType> petTypes = this.pets.findPetTypes();
-
+		
 		PetType petType1 = EntityUtils.getById(petTypes, PetType.class, 1);
 		assertThat(petType1.getName()).isEqualTo("cat");
 		PetType petType4 = EntityUtils.getById(petTypes, PetType.class, 4);
 		assertThat(petType4.getName()).isEqualTo("snake");
+		
 	}
 
 	@Test
 	@Transactional
 	public void shouldInsertPetIntoDatabaseAndGenerateId() {
+		
 		Owner owner6 = this.owners.findById(6);
 		int found = owner6.getPets().size();
 
@@ -167,11 +176,13 @@ public class ClinicServiceTests {
 		assertThat(owner6.getPets().size()).isEqualTo(found + 1);
 		// checks that id has been generated
 		assertThat(pet.getId()).isNotNull();
+		
 	}
 
 	@Test
 	@Transactional
 	public void shouldUpdatePetName() throws Exception {
+		
 		Pet pet7 = this.pets.findById(7);
 		String oldName = pet7.getName();
 
@@ -181,10 +192,12 @@ public class ClinicServiceTests {
 
 		pet7 = this.pets.findById(7);
 		assertThat(pet7.getName()).isEqualTo(newName);
+		
 	}
 
 	@Test
 	public void shouldFindVets() {
+		
 		Collection<Vet> vets = this.vets.findAll();
 
 		Vet vet = EntityUtils.getById(vets, Vet.class, 3);
@@ -192,11 +205,13 @@ public class ClinicServiceTests {
 		assertThat(vet.getNrOfSpecialties()).isEqualTo(2);
 		assertThat(vet.getSpecialties().get(0).getName()).isEqualTo("dentistry");
 		assertThat(vet.getSpecialties().get(1).getName()).isEqualTo("surgery");
+		
 	}
 
 	@Test
 	@Transactional
 	public void shouldAddNewVisitForPet() {
+		
 		Pet pet7 = this.pets.findById(7);
 		int found = pet7.getVisits().size();
 		Visit visit = new Visit();
