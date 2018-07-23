@@ -35,12 +35,13 @@ import java.util.Map;
 @Controller
 class VisitController {
 
-	private final VisitRepository visits;
-	private final PetRepository pets;
+	private final VisitRepository visitRepository;
+	
+	private final PetRepository petRepository;
 
 	public VisitController(VisitRepository visits, PetRepository pets) {
-		this.visits = visits;
-		this.pets = pets;
+		this.visitRepository = visits;
+		this.petRepository = pets;
 	}
 
 	@InitBinder
@@ -58,7 +59,7 @@ class VisitController {
 	 */
 	@ModelAttribute("visit")
 	public Visit loadPetWithVisit(@PathVariable("petId") int petId, Map<String, Object> model) {
-		Pet pet = this.pets.findById(petId);
+		Pet pet = this.petRepository.findById(petId);
 		model.put("pet", pet);
 		Visit visit = new Visit();
 		pet.addVisit(visit);
@@ -77,7 +78,7 @@ class VisitController {
 		if (result.hasErrors()) {
 			return "pets/createOrUpdateVisitForm";
 		} else {
-			this.visits.save(visit);
+			this.visitRepository.save(visit);
 			return "redirect:/owners/{ownerId}";
 		}
 	}

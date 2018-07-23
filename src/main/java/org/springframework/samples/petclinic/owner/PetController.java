@@ -35,22 +35,24 @@ import java.util.Collection;
 class PetController {
 
 	private static final String VIEWS_PETS_CREATE_OR_UPDATE_FORM = "pets/createOrUpdatePetForm";
-	private final PetRepository pets;
-	private final OwnerRepository owners;
+	
+	private final PetRepository petRepository;
+	
+	private final OwnerRepository ownerRepository;
 
 	public PetController(PetRepository pets, OwnerRepository owners) {
-		this.pets = pets;
-		this.owners = owners;
+		this.petRepository = pets;
+		this.ownerRepository = owners;
 	}
 
 	@ModelAttribute("types")
 	public Collection<PetType> populatePetTypes() {
-		return this.pets.findPetTypes();
+		return this.petRepository.findPetTypes();
 	}
 
 	@ModelAttribute("owner")
 	public Owner findOwner(@PathVariable("ownerId") int ownerId) {
-		return this.owners.findById(ownerId);
+		return this.ownerRepository.findById(ownerId);
 	}
 
 	@InitBinder("owner")
@@ -81,14 +83,14 @@ class PetController {
 			model.put("pet", pet);
 			return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 		} else {
-			this.pets.save(pet);
+			this.petRepository.save(pet);
 			return "redirect:/owners/{ownerId}";
 		}
 	}
 
 	@GetMapping("/pets/{petId}/edit")
 	public String initUpdateForm(@PathVariable("petId") int petId, ModelMap model) {
-		Pet pet = this.pets.findById(petId);
+		Pet pet = this.petRepository.findById(petId);
 		model.put("pet", pet);
 		return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 	}
@@ -101,7 +103,7 @@ class PetController {
 			return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
 		} else {
 			owner.addPet(pet);
-			this.pets.save(pet);
+			this.petRepository.save(pet);
 			return "redirect:/owners/{ownerId}";
 		}
 	}
