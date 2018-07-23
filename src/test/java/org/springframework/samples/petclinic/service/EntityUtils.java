@@ -40,8 +40,7 @@ public abstract class EntityUtils {
 	 * @return the found entity
 	 * @throws ObjectRetrievalFailureException if the entity was not found
 	 */
-	public static <T extends BaseEntity> T getById(Collection<T> entities, Class<T> entityClass, int entityId)
-			throws ObjectRetrievalFailureException {
+	public static <T extends BaseEntity> T getById(Collection<T> entities, Class<T> entityClass, int entityId) throws ObjectRetrievalFailureException {
 		for (T entity : entities) {
 			if (entity.getId() == entityId && entityClass.isInstance(entity)) {
 				return entity;

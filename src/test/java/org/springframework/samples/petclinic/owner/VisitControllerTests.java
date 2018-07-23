@@ -47,27 +47,17 @@ public class VisitControllerTests {
 
 	@Test
 	public void testInitNewVisitForm() throws Exception {
-		mockMvc.perform(get("/owners/*/pets/{petId}/visits/new", TEST_PET_ID))
-			.andExpect(status().isOk())
-			.andExpect(view().name("pets/createOrUpdateVisitForm"));
+		mockMvc.perform(get("/owners/*/pets/{petId}/visits/new", TEST_PET_ID)).andExpect(status().isOk()).andExpect(view().name("pets/createOrUpdateVisitForm"));
 	}
 
 	@Test
 	public void testProcessNewVisitFormSuccess() throws Exception {
-		mockMvc.perform(post("/owners/*/pets/{petId}/visits/new", TEST_PET_ID)
-				.param("name", "George")
-				.param("description", "Visit Description"))
-			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:/owners/{ownerId}"));
+		mockMvc.perform(post("/owners/*/pets/{petId}/visits/new", TEST_PET_ID).param("name", "George").param("description", "Visit Description")).andExpect(status().is3xxRedirection()).andExpect(view().name("redirect:/owners/{ownerId}"));
 	}
 
 	@Test
 	public void testProcessNewVisitFormHasErrors() throws Exception {
-		mockMvc.perform(post("/owners/*/pets/{petId}/visits/new", TEST_PET_ID)
-				.param("name", "George"))
-			.andExpect(model().attributeHasErrors("visit"))
-			.andExpect(status().isOk())
-			.andExpect(view().name("pets/createOrUpdateVisitForm"));
+		mockMvc.perform(post("/owners/*/pets/{petId}/visits/new", TEST_PET_ID).param("name", "George")).andExpect(model().attributeHasErrors("visit")).andExpect(status().isOk()).andExpect(view().name("pets/createOrUpdateVisitForm"));
 	}
 
 }
